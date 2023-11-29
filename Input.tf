@@ -34,3 +34,44 @@ variable "key_vault_secret_name" {
       
 }
 
+
+variable "service_plan_name" {
+    type = string
+  
+}
+
+variable "linux_web_app_name" {
+    type = string
+  
+}
+variable "sku_tier" {
+    type = string
+    default = "Basic"
+  
+}
+
+variable "sku_size" {
+    type = string
+    default = "S1"
+}
+
+variable "dotnet_version" {
+  type        = string
+  default     = "v5.0"
+}
+
+variable "https_only" {
+  type        = bool
+  default     = true
+}
+
+variable "os_type" {
+  type        = string
+  default     = "Linux"
+}
+
+variable "service_plan_id" {
+  type        = number
+  
+}
+

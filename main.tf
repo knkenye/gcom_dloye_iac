@@ -1,7 +1,17 @@
 resource "azurerm_resource_group" "RG" {
+
   name     = var.resource_group_name
   location = var.location
-}
+  tags = {
+
+      ApplicationName  = "Gecom BTX"  
+      ApplicationOwner = "luis.olguin@vinci-construction.com"
+      ApplicationSponsor = " luis.olguin@vinci-construction.com"
+      TechnicalContact  = "luis.olguin@vinci-construction.com"
+      LZ_Onboarding_Version = "0.1"
+  }
+  
+ }
 
 
 resource "azurerm_mysql_flexible_server" "MSQL001" {
@@ -81,7 +91,44 @@ resource "azurerm_key_vault_secret" "SCR001" {
   key_vault_id = azurerm_key_vault.KV001.id
 }
 
+resource "azurerm_service_plan" "APP001" {
+  name                = var.service_plan_name
+  resource_group_name = azurerm_resource_group.RG.name
+  location            = azurerm_resource_group.RG.location
+  os_type = var.os_type
+  sku_name = "P1v2"
 
+  tags = {
+
+      ApplicationName  = "Gecom BTX"  
+      module = "appservice"
+      ApplicationSponsor = " luis.olguin@vinci-construction.com"
+      TechnicalContact  = "luis.olguin@vinci-construction.com" 
+      Environement = "Prd"  
+  }
+ 
+}
+
+resource "azurerm_linux_web_app" "APS001" {
+  name                = var.linux_web_app_name
+  resource_group_name = azurerm_resource_group.RG.name
+  location            = azurerm_resource_group.RG.location
+  service_plan_id     = azurerm_service_plan.APP001.id
+  tags = {
+
+      ApplicationName  = "Gecom BTX"  
+      module = "asp"
+      ApplicationSponsor = " luis.olguin@vinci-construction.com"
+      TechnicalContact  = "luis.olguin@vinci-construction.com" 
+      Environement = "Prd"  
+  }
+  site_config {
+    
+
+  }
+
+
+}
 
 
 terraform {
